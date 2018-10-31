@@ -1,0 +1,5 @@
+package it.finsoft.RoomReserve.model;
+
+public class RoomHour1 {
+
+}

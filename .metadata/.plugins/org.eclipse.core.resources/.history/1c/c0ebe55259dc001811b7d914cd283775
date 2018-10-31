@@ -1,0 +1,16 @@
+package it.finsoft.RoomReserve.model;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="room3")
+public class Room3 extends Room2{
+
+
+}
+

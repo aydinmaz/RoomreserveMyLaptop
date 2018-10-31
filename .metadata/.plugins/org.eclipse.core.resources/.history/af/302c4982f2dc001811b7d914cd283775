@@ -1,0 +1,80 @@
+package it.finsoft.RoomReserve.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import it.finsoft.RoomReserve.model.RoomHour2;
+import it.finsoft.RoomReserve.model.RoomHour3;
+import it.finsoft.RoomReserve.model.RoomHourBase;
+import it.finsoft.RoomReserve.repository.Room2Repository;
+import it.finsoft.RoomReserve.repository.Room3Repository;
+import it.finsoft.RoomReserve.repository.RoomHourBaseRepository;
+
+@Service
+public class RoomHourServiceImpl implements RoomHourService{
+
+	
+	@Autowired
+	private RoomHourBaseRepository roomrepos;
+
+	@Autowired 
+	private Room2Repository roomrepos2;
+
+	@Autowired 
+	private Room3Repository roomrepos3;
+	
+	@Override
+	public void saverooms(){
+	
+	List<RoomHourBase> allRooms = roomrepos.findAll();
+	if (allRooms.isEmpty()) 
+	{
+		List<RoomHourBase> rooms = new ArrayList<>();
+		String days[] = { "Monday", "Tuseday", "Wednesday", "Thursday", "Friday" };
+		for (String element : days) 
+		{
+			for (int i = 0; i < 5; i++) 
+			{
+				RoomHourBase r = new RoomHourBase(element, i + 1, false);
+				rooms.add(r);
+			}
+		}
+		roomrepos.saveAll(rooms);// saves in mysql
+	}
+
+	List<RoomHour2> allRooms2 = roomrepos2.findAll();
+	if (allRooms2.isEmpty()) 
+	{
+		List<RoomHour2> rooms2 = new ArrayList<>();
+		String days[] = { "Monday", "Tuseday", "Wednesday", "Thursday", "Friday" };
+		for (String element : days) 
+		{
+			for (int i = 0; i < 5; i++) 
+			{
+				RoomHour2 r = new RoomHour2(element, i + 1, false);
+				rooms2.add(r);
+			}
+		}
+		roomrepos2.saveAll(rooms2);// saves in mysql
+	}
+
+	List<RoomHour3> allRooms3 = roomrepos3.findAll();
+	if (allRooms3.isEmpty()) 
+	 {
+		List<RoomHour3> rooms3 = new ArrayList<>();
+		String days[] = { "Monday", "Tuseday", "Wednesday", "Thursday", "Friday" };
+		for (String element : days) 
+		 {
+			for (int i = 0; i < 5; i++)
+			{
+				RoomHour3 r = new RoomHour3(element, i + 1, false);
+				rooms3.add(r);
+			}
+		 }
+		roomrepos3.saveAll(rooms3);// saves in mysql
+	 }
+	}
+}

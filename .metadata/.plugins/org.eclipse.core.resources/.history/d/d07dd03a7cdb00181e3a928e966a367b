@@ -1,0 +1,8 @@
+package it.finsoft.RoomReserve.service;
+
+@Service
+public interface SecurityService {
+	public void autologin(String username, String password);
+	 public String findLoggedInUsername();
+
+}

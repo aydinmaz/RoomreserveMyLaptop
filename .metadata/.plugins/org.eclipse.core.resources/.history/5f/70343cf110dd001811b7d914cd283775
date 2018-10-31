@@ -1,0 +1,22 @@
+package it.finsoft.RoomReserve.service;
+
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import it.finsoft.RoomReserve.model.Room;
+import it.finsoft.RoomReserve.repository.RoomRepository;
+
+@Service
+public class RoomServiceImp {
+
+	@Autowired //
+	private RoomRepository roomrpstry;
+
+	public Optional<Room> findById(long id) {
+
+		return roomrpstry.findById(id);
+	}
+
+}

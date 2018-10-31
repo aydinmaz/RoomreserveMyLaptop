@@ -1,0 +1,34 @@
+package it.finsoft.RoomReserve.service;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.stereotype.Service;
+
+import it.finsoft.RoomReserve.model.RoomHour1;
+import it.finsoft.RoomReserve.model.RoomHour2;
+import it.finsoft.RoomReserve.model.RoomHour3;
+
+@Service
+public interface RoomHourService {
+
+	public void saverooms();
+
+	public List<RoomHour1> findRooms1();
+
+	public List<RoomHour2> findRooms2();
+
+	public List<RoomHour3> findRooms3();
+	
+	public Optional<RoomHour1> findById(long id);
+	
+	public Optional<RoomHour2> findById2(long id);
+	
+	public Optional<RoomHour3> findById3(long id);
+	
+	public void saveRommhour1(RoomHour1 roomhour1);
+	
+	public void saveRommhour2(RoomHour2 roomhour2);
+	
+	public void saveRommhour3(RoomHour3 roomhour3);
+}

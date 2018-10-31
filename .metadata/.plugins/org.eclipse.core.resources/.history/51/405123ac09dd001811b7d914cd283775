@@ -1,0 +1,135 @@
+package it.finsoft.RoomReserve.controller;
+
+import java.util.List;
+import java.util.Optional;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import it.finsoft.RoomReserve.model.RoomHour1;
+import it.finsoft.RoomReserve.model.RoomHour2;
+import it.finsoft.RoomReserve.model.RoomHour3;
+import it.finsoft.RoomReserve.model.User;
+import it.finsoft.RoomReserve.service.RoomHour1Service;
+import it.finsoft.RoomReserve.service.RoomHour2Service;
+import it.finsoft.RoomReserve.service.RoomHour3Service;
+import it.finsoft.RoomReserve.service.SecurityService;
+import it.finsoft.RoomReserve.service.UserService;
+
+@Controller
+public class RoomController {
+	
+	@Autowired
+	private UserService userService;
+	
+	@Autowired
+	private SecurityService securityService;
+	
+	@Autowired
+	private RoomHour1Service roomhourservice1;
+	@Autowired
+	private RoomHour2Service roomhourservice2;
+	@Autowired
+	private RoomHour3Service roomhourservice3;
+	
+	@RequestMapping(value = "/reservation", method = RequestMethod.GET)
+	public String reservation(Model model) {
+		roomhourservice1.saverooms();
+		roomhourservice2.saverooms();
+		roomhourservice3.saverooms();
+
+		List<RoomHour1> roomhours1 = roomhourservice1.findRooms();
+		List<RoomHour2> roomhours2 = roomhourservice2.findRooms();
+		List<RoomHour3> roomhours3 = roomhourservice3.findRooms();
+
+		String usernameOfloggeduser = securityService.findLoggedInUsername();
+		model.addAttribute("currentuser", usernameOfloggeduser);
+		model.addAttribute("rooms1", roomhours1);
+		model.addAttribute("rooms2", roomhours2);
+		model.addAttribute("rooms3", roomhours3);
+		return "reservation";
+	}
+
+	@RequestMapping(value = "/reservationTest", method = RequestMethod.GET)
+	public void reservationAjax(HttpServletRequest req) {
+		// String id = req.getParameter("room_id");
+		String id = req.getParameter("room_id");// in room_id dar jsp dar ajax neveshte shode ,yani dakhele httpreq
+												// ,room_id gozashte shode
+
+		String id_part1 = id.substring(0, 1);
+		String id_part2 = id.substring(1);
+
+		Long id_room = Long.parseLong(id_part2);
+		System.out.println("idt1: " + id_part1);
+		System.out.println("idt2: " + id_part2);
+		// your logic here
+
+		String usernameOfloggeduser = securityService.findLoggedInUsername();
+		User currentuser = userService.findByUsername(usernameOfloggeduser);
+
+		Optional<RoomHour1> clickedroom1;
+		Optional<RoomHour2> clickedroom2;
+		Optional<RoomHour3> clickedroom3;
+		boolean clickedroom_value;
+		List<RoomHour1> roomhoursOfcurrentuser1;
+		List<RoomHour2> roomhoursOfcurrentuser2;
+		List<RoomHour3> roomhoursOfcurrentuser3;
+
+		if (id_part1.equals("1")) {
+			clickedroom1 = roomhourservice1.findById(id_room);
+			clickedroom_value = clickedroom1.get().isConfirm();
+			roomhoursOfcurrentuser1 = currentuser.getRooms1();
+
+			if (!clickedroom_value) {
+				clickedroom1.get().setConfirm(true);
+				roomhoursOfcurrentuser1.add(clickedroom1.get());
+				clickedroom1.get().setUser(currentuser);
+			} else {
+				clickedroom1.get().setConfirm(false);
+				roomhoursOfcurrentuser1.remove(clickedroom1.get());
+				clickedroom1.get().setUser(null);
+			}
+			roomhourservice1.saveRoomhour(clickedroom1.get());
+		}
+
+		else if (id_part1.equals("2")) {
+			clickedroom2 = roomhourservice2.findById(id_room);
+			clickedroom_value = clickedroom2.get().isConfirm();
+			roomhoursOfcurrentuser2 = currentuser.getRooms2();
+
+			if (!clickedroom_value) {
+				clickedroom2.get().setConfirm(true);
+				roomhoursOfcurrentuser2.add(clickedroom2.get());
+				clickedroom2.get().setUser(currentuser);
+			} else {
+				clickedroom2.get().setConfirm(false);
+				roomhoursOfcurrentuser2.remove(clickedroom2.get());
+				clickedroom2.get().setUser(null);
+			}
+			roomhourservice2.saveRoomhour(clickedroom2.get());
+		} else {
+			clickedroom3 = roomhourservice3.findById(id_room);
+			clickedroom_value = clickedroom3.get().isConfirm();
+			roomhoursOfcurrentuser3 = currentuser.getRooms3();
+
+			if (!clickedroom_value) {
+				clickedroom3.get().setConfirm(true);
+				roomhoursOfcurrentuser3.add(clickedroom3.get());
+				clickedroom3.get().setUser(currentuser);
+			} else {
+				clickedroom3.get().setConfirm(false);
+				roomhoursOfcurrentuser3.remove(clickedroom3.get());
+				clickedroom3.get().setUser(null);
+			}
+
+			roomhourservice3.saveRoomhour(clickedroom3.get());
+		}
+
+	}
+
+}

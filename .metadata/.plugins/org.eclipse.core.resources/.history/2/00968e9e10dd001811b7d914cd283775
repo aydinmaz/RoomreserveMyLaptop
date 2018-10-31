@@ -1,0 +1,5 @@
+package it.finsoft.RoomReserve.service;
+
+public class RoomServiceImp {
+
+}

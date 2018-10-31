@@ -1,0 +1,8 @@
+package it.finsoft.RoomReserve.model;
+
+import javax.persistence.Entity;
+
+@Entity
+public class Room2 extends RoomHourBase {
+
+}

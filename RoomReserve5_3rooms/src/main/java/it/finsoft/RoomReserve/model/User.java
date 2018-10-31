@@ -1,0 +1,103 @@
+package it.finsoft.RoomReserve.model;
+
+import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+
+@Entity
+public class User {
+
+	private int id;
+	private String name;
+	private String username;
+	private String email;
+	private String password;
+	private String passwordConfirm;
+	private List<RoomHour1> rooms1;
+	private List<RoomHour2> rooms2;
+	private List<RoomHour3> rooms3;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getPasswordConfirm() {
+		return passwordConfirm;
+	}
+
+	public void setPasswordConfirm(String passwordConfirm) {
+		this.passwordConfirm = passwordConfirm;
+	}
+
+	@ManyToMany
+	public List<RoomHour1> getRooms1() {
+		return rooms1;
+	}
+
+	public void setRooms1(List<RoomHour1> rooms1) {
+		this.rooms1 = rooms1;
+	}
+
+	@ManyToMany
+	public List<RoomHour2> getRooms2() {
+		return rooms2;
+	}
+
+	public void setRooms2(List<RoomHour2> rooms2) {
+		this.rooms2 = rooms2;
+	}
+
+	@ManyToMany
+	public List<RoomHour3> getRooms3() {
+		return rooms3;
+	}
+
+	public void setRooms3(List<RoomHour3> rooms3) {
+		this.rooms3 = rooms3;
+	}
+
+
+
+}

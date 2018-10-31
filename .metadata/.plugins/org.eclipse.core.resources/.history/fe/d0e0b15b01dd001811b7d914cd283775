@@ -1,0 +1,99 @@
+package it.finsoft.RoomReserve.service;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import it.finsoft.RoomReserve.model.RoomHour1;
+import it.finsoft.RoomReserve.model.RoomHour2;
+import it.finsoft.RoomReserve.model.RoomHour3;
+import it.finsoft.RoomReserve.repository.RoomHour1Repository;
+import it.finsoft.RoomReserve.repository.RoomHour2Repository;
+import it.finsoft.RoomReserve.repository.RoomHour3Repository;
+
+@Service
+public class RoomHourServiceImpl implements RoomHourService {
+
+	@Autowired
+	private RoomHour1Repository roomrepos1;
+
+	@Autowired
+	private RoomHour2Repository roomrepos2;
+
+	@Autowired
+	private RoomHour3Repository roomrepos3;
+
+	@Override
+	public List<RoomHour1> findRooms1() {
+		return roomrepos1.findAll();
+	}
+
+	@Override
+	public List<RoomHour2> findRooms2() {
+		return roomrepos2.findAll();
+	}
+
+	@Override
+	public List<RoomHour3> findRooms3() {
+		return roomrepos3.findAll();
+	}
+
+	
+	@Override
+	public Optional<RoomHour1> findById(long id) {
+		return roomrepos1.findById(id);
+	}
+	
+	@Override
+	public Optional<RoomHour2> findById2(long id) {
+		return roomrepos2.findById(id);
+	}
+	
+	@Override
+	public Optional<RoomHour3> findById3(long id) {
+		return roomrepos3.findById(id);
+	}
+	
+	@Override
+	public void saverooms() {
+
+		List<RoomHour1> roomhours1 = roomrepos1.findAll();
+		if (roomhours1.isEmpty()) {
+			String days[] = { "Monday", "Tuseday", "Wednesday", "Thursday", "Friday" };
+			for (String element : days) {
+				for (int i = 0; i < 5; i++) {
+					RoomHour1 r = new RoomHour1(element, i + 1, false);
+					roomhours1.add(r);
+				}
+			}
+			roomrepos1.saveAll(roomhours1);// saves in mysql
+		}
+
+		List<RoomHour2> roomhours2 = roomrepos2.findAll();
+		if (roomhours2.isEmpty()) {
+			String days[] = { "Monday", "Tuseday", "Wednesday", "Thursday", "Friday" };
+			for (String element : days) {
+				for (int i = 0; i < 5; i++) {
+					RoomHour2 r = new RoomHour2(element, i + 1, false);
+					roomhours2.add(r);
+				}
+			}
+			roomrepos2.saveAll(roomhours2);// saves in mysql
+		}
+
+		List<RoomHour3> roomhours3 = roomrepos3.findAll();
+		if (roomhours3.isEmpty()) {
+
+			String days[] = { "Monday", "Tuseday", "Wednesday", "Thursday", "Friday" };
+			for (String element : days) {
+				for (int i = 0; i < 5; i++) {
+					RoomHour3 r = new RoomHour3(element, i + 1, false);
+					roomhours3.add(r);
+				}
+			}
+			roomrepos3.saveAll(roomhours3);// saves in mysql
+		}
+	}
+}

@@ -1,0 +1,82 @@
+package it.finsoft.RoomReserve;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+//import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+//import org.springframework.boot.autoconfigure.web.ErrorMvcAutoConfiguration;
+
+import it.finsoft.RoomReserve.model.Room;
+import it.finsoft.RoomReserve.model.Room2;
+import it.finsoft.RoomReserve.model.Room3;
+import it.finsoft.RoomReserve.repository.Room2Repository;
+import it.finsoft.RoomReserve.repository.Room3Repository;
+import it.finsoft.RoomReserve.repository.RoomRepository;
+
+@SpringBootApplication
+//@EnableAutoConfiguration(exclude=ErrorMvcAutoConfiguration.class)
+public class RoomReserveApplication implements CommandLineRunner {
+
+	@Autowired // what does this do?makes connection with database
+	private RoomRepository roomrepos;// this is instansiating the interface and x is like a new object of this
+										// interface
+
+	@Autowired // what does this do?makes connection with database
+	private Room2Repository roomrepos2;
+
+	@Autowired // what does this do?makes connection with database
+	private Room3Repository roomrepos3;
+
+	public static void main(String[] args) {
+		SpringApplication.run(RoomReserveApplication.class, args);
+	}
+
+	@Override // what does this do?
+	// @Transactional
+	public void run(String... arg0) throws Exception {
+		List<Room> allRooms = roomrepos.findAll();
+		if (allRooms.isEmpty()) {
+			List<Room> rooms = new ArrayList<>();
+			String days[] = { "Monday", "Tuseday", "Wednesday", "Thursday", "Friday" };
+			for (String element : days) {
+				for (int i = 0; i < 5; i++) {
+					Room r = new Room(element, i + 1, false);
+					rooms.add(r);
+				}
+			}
+			roomrepos.saveAll(rooms);// saves in mysql
+		}
+
+		List<Room> allRooms2 = roomrepos2.findAll();
+		if (allRooms2.isEmpty()) {
+			List<Room> rooms2 = new ArrayList<>();
+			String days[] = { "Monday", "Tuseday", "Wednesday", "Thursday", "Friday" };
+			for (String element : days) {
+				for (int i = 0; i < 5; i++) {
+					Room r = new Room(element, i + 1, false);
+					rooms2.add(r);
+				}
+			}
+			roomrepos2.saveAll(rooms2);// saves in mysql
+		}
+
+		List<Room2> allRooms3 = roomrepos3.findAll();
+		if (allRooms3.isEmpty()) {
+			List<Room2> rooms3 = new ArrayList<>();
+			String days[] = { "Monday", "Tuseday", "Wednesday", "Thursday", "Friday" };
+			for (String element : days) {
+				for (int i = 0; i < 5; i++) {
+					Room2 r = new Room2(element, i + 1, false);
+					rooms3.add(r);
+				}
+			}
+			roomrepos3.saveAll(rooms3);// saves in mysql
+		}
+
+	}
+
+}

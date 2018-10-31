@@ -1,0 +1,49 @@
+package it.finsoft.RoomReserve.service;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import it.finsoft.RoomReserve.model.RoomHour1;
+import it.finsoft.RoomReserve.repository.RoomHour1Repository;
+
+@Service
+public class RoomHour1ServiceImpl implements RoomHour1Service {
+
+	@Autowired
+	private RoomHour1Repository roomrepos1;
+
+	@Override
+	public List<RoomHour1> findRooms() {
+		return roomrepos1.findAll();
+	}
+
+	@Override
+	public Optional<RoomHour1> findById(long id) {
+		return roomrepos1.findById(id);
+	}
+
+	@Override
+	public void saveRommhour(RoomHour1 roomhour1) {
+		roomrepos1.save(roomhour1);
+	}
+
+	@Override
+	public void saverooms() {
+
+		List<RoomHour1> roomhours1 = roomrepos1.findAll();
+		if (roomhours1.isEmpty()) {
+			String days[] = { "Monday", "Tuseday", "Wednesday", "Thursday", "Friday" };
+			for (String element : days) {
+				for (int i = 0; i < 5; i++) {
+					RoomHour1 r = new RoomHour1(element, i + 1, false);
+					roomhours1.add(r);
+				}
+			}
+			roomrepos1.saveAll(roomhours1);// saves in mysql
+		}
+
+	}
+}

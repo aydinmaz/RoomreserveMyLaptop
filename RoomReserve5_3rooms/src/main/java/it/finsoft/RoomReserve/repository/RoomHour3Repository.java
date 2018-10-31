@@ -1,0 +1,17 @@
+package it.finsoft.RoomReserve.repository;
+
+import java.util.List;
+
+//import java.util.List;
+
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
+import it.finsoft.RoomReserve.model.RoomHour3;
+
+@Repository
+public interface RoomHour3Repository extends CrudRepository<RoomHour3, Long> {
+
+	public List<RoomHour3> findAll();// mesl inke in yek function hast
+
+}
